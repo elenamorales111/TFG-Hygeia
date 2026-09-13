@@ -33,6 +33,15 @@ doctorRegisterForm.addEventListener("submit", async (event) => {
 	  }
 
 	});
+	
+	//Comprobar que el médico ha seleccionado al menos un día de trabajo
+		if (schedules.length === 0) {
+
+		  message.className = "alert alert-danger mt-4";
+		  message.textContent = "Debes seleccionar al menos un día de trabajo";
+
+		  return;
+		}
 
   try {
 
