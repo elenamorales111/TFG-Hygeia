@@ -15,7 +15,7 @@ Para instalar la aplicación realiza los siguientes pasos:
 2. Entra en ella desde la terminal y clona el repositorio:
 
 ```
-git clone https://github.com/elenamorales111/Hygeia.git
+git clone https://github.com/elenamorales111/TFG-Hygeia.git
 ```
 
 3. Escribe en tu terminal:
