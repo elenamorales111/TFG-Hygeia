@@ -162,19 +162,20 @@ window.addEventListener("DOMContentLoaded", async () => {
 //Editar
 editBtn.addEventListener("click", () => {
 
-  //Parámetros de datos del paciente
-  nameInput.disabled = false;
-  surnamesInput.disabled = false;
-  dateOfBirthInput.disabled = false;
-  dniInput.disabled = false;
-  emailInput.disabled = false;
-  phoneNumberInput.disabled = false;
-  addressInput.disabled = false;
-  postalCodeInput.disabled = false;
-  provinceInput.disabled = false;
-  
-  //Parámetros del historial médico del paciente (El médico no puede editarlos)
+	//Parámetros de paciente y médico
+	nameInput.disabled = false;
+	surnamesInput.disabled = false;
+	dniInput.disabled = false;
+	emailInput.disabled = false;
+
+	//Parámetros que sólo tiene el paciente
 	if (role !== "DOCTOR") {
+
+	  dateOfBirthInput.disabled = false;
+	  phoneNumberInput.disabled = false;
+	  addressInput.disabled = false;
+	  postalCodeInput.disabled = false;
+	  provinceInput.disabled = false;
 
 	  illnessInput.disabled = false;
 	  statusInput.disabled = false;
@@ -184,18 +185,17 @@ editBtn.addEventListener("click", () => {
 	  medicationInput.disabled = false;
 	  healthInsuranceInput.disabled = false;
 	  familyDoctorInput.disabled = false;
-
 	}
-  
-  if (role === "DOCTOR") {
 
-  document.getElementById("speciality").disabled = false;
+	//Parámetros que sólo tiene el médico
+	if (role === "DOCTOR") {
 
-  document.getElementById("medicalCenter").disabled = false;
-  
-  enableDoctorTimetableFields(false);
+	  document.getElementById("speciality").disabled = false;
+	  document.getElementById("medicalCenter").disabled = false;
 
+	  enableDoctorTimetableFields(false);
 	}
+ 
 
   editBtn.classList.add("d-none");
   saveBtn.classList.remove("d-none");
@@ -248,6 +248,31 @@ async function loadDoctors() {
 
 //Guardar cambios
 saveBtn.addEventListener("click", async () => {
+
+  const userForm = document.getElementById("userForm");
+
+	/*Funciones de JavaScipt que comprueban que el formulario se
+	ha rellenado correctamente*/
+  if (!userForm.checkValidity()) {
+    userForm.reportValidity();
+    return;
+  }
+  
+  //Si es médico, comprobar que tiene al menos un día de trabajo
+	if (role === "DOCTOR") {
+
+	  const days = ["L", "M", "X", "J", "V", "S", "D"];
+
+	  const hasWorkingDay = days.some((day) => {
+		return document.getElementById(`${day}_schedule`).checked;
+	  });
+
+	  if (!hasWorkingDay) {
+		message.className = "alert alert-danger mt-4";
+		message.textContent = "Debes seleccionar al menos un día de trabajo";
+		return;
+	  }
+	}
 
   try {
 
@@ -312,8 +337,8 @@ saveBtn.addEventListener("click", async () => {
 		  : "";
 	  
 		const medicalRecordBody = {
-		  illness: illnessInput.value || "No especificado",
-		  status: statusInput.value || "No especificado",
+		  illness: illnessInput.value,
+		  status: statusInput.value,
 		  medicalHistory: medicalHistoryInput.value,
 		  bloodType: bloodTypeInput.value,
 		  allergies: allergiesInput.value,
