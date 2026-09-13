@@ -19,7 +19,7 @@ const HumanDoctor = require("./models/humanDoctor")(sequelize);
 const AIDoctor = require("./models/aiDoctor")(sequelize);
 const Question = require("./models/question")(sequelize);
 const RealDoctorAppointment = require("./models/realDoctorAppointment")(sequelize);
-const DoctorTimetable = require("./models/DoctorTimetable")(sequelize);
+const DoctorTimetable = require("./models/doctorTimetable")(sequelize);
 
 
 //Cardinalidades
