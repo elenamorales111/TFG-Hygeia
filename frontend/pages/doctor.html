@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Diseño responsive -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Título de la pestaña superior en el navegador -->
+  <title>Doctor</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="../assets/images/hygeia_logo.png">
+  
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+
+    /*Poner imagen de fondo en el body con una capa blanca clarita encima para 
+    poder leer el texto*/
+	
+	/*En este es algo distinto porque sino el footer no llegaba hasta el
+	pie de página*/
+	body {
+	  background:
+		linear-gradient(rgba(255, 255, 255, 0.70),
+		rgba(255, 255, 255, 0.70)),
+		url("../assets/images/index_image.png");
+
+	  background-size: cover;
+	  background-position: center;
+	  min-height: 100vh;
+
+	  display: flex;
+	  flex-direction: column;
+	}
+
+    /*Degradado azul de Navbar superior*/
+    .navbar {
+      background: linear-gradient(90deg, #004aad, #005fd4);
+    }
+
+    /*HYGEIA en Navbar*/
+    .navbar-brand {
+      font-family: "Playfair Display", serif;
+      font-size: 2rem;
+      letter-spacing: 1px;
+    }
+
+    /*Tamaño logo Hygeia*/
+    .logo-img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+    }
+
+    /*Cuadro de médico real*/
+    .doctor-card {
+      border: none;
+      border-radius: 24px;
+      box-shadow: 0 10px 30px rgba(0, 74, 173, 0.18);
+    }
+
+    /*Tipografía de los títulos y subtítulos*/
+	h1, h2, h3, h4, h5, h6 {
+	  font-family: "Playfair Display", serif;
+	  color: #0b3d91;
+	  font-weight: 700;
+	}
+
+    /*Botón principal*/
+    .main-btn {
+      background-color: #005fd4;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+
+    .main-btn:hover {
+      background-color: #004aad;
+    }
+
+    /*Tarjeta individual de cita*/
+    .appointment-item {
+      border-left: 8px solid #005fd4;
+      border-radius: 16px;
+    }
+	
+	/*Footer*/
+	footer {
+      background-color: #00357a;
+    }
+	
+	/*En este es algo distinto porque sino el footer no llegaba hasta el
+	pie de página*/
+	main {
+	  flex: 1;
+	}
+	
+
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark shadow py-3">
+    <div class="container">
+
+      <a class="navbar-brand d-flex align-items-center gap-3" href="../../home.html">
+        <img src="../assets/images/hygeia_logo.png" alt="Hygeia Logo" class="logo-img">
+        <span>HYGEIA</span>
+      </a>
+
+      <div>
+        <a href="../../home.html" class="btn btn-outline-light">
+          Home
+        </a>
+      </div>
+
+    </div>
+  </nav>
+
+  <main class="container py-5">
+
+    <section class="row justify-content-center align-items-center">
+
+      <div class="col-md-10 col-lg-8">
+
+        <div class="card doctor-card">
+
+          <div class="card-body p-5">
+
+            <h1 class="doctor-title text-center mb-2">
+              Médico Real
+            </h1>
+
+            <p  id="doctorDescription" class="text-center text-muted mb-4">
+              Esta sección de la web te será muy útil para pedir citas médicas por videollamada a los doctores dados de alta en Hygeia
+            </p>
+
+            <button
+              id="addRealDoctorAppointmentBtn"
+              class="btn btn-primary main-btn w-100"
+              data-bs-toggle="modal"
+              data-bs-target="#realDoctorModal"
+            >
+              <i class="bi bi-camera-video me-2"></i>
+              
+			    <span id="appointmentButtonText">
+				Solicitar cita con médico real
+			  </span>
+			  
+            </button>
+
+            <div id="message" class="alert mt-4 d-none"></div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <div class="container mb-5">
+
+    <h3 class="text-primary mt-4 mb-4">
+      Citas de telemedicina registradas
+    </h3>
+
+    <div id="realDoctorAppointmentsList" class="list-group mb-4"></div>
+
+  </div>
+
+  <!-- MODAL PARA AÑADIR O EDITAR CITA -->
+  <div class="modal fade" id="realDoctorModal" tabindex="-1">
+
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+
+      <div class="modal-content rounded-4">
+
+        <div class="modal-header">
+
+          <h5 id="modalTitle" class="modal-title text-primary fw-bold">
+            Cita con médico real
+          </h5>
+
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+
+        </div>
+
+        <div class="modal-body">
+
+          <form id="realDoctorForm">
+
+            <input id="realDoctorAppointmentId" type="hidden">
+
+			<div id="patientSelectContainer" class="mb-3 d-none">
+
+			  <label for="patientSelect" class="form-label">
+				Paciente <span style="color:red">*</span>
+			  </label>
+
+			  <select id="patientSelect" class="form-select" required>
+				<option value="">Selecciona un paciente</option>
+			  </select>
+
+			</div>
+
+            <div class="mb-3">
+              <label for="doctor" class="form-label">
+                Médico <span style="color:red">*</span>
+              </label>
+
+              <select id="doctor" class="form-select" required>
+                <option value="">Selecciona un médico</option>
+              </select>
+            </div>
+			
+			<!-- Buscar próximas citas disponibles -->
+		<div class="card bg-light border-0 rounded-4 p-3 mb-4">
+
+		  <label for="startSearchDate" class="form-label fw-semibold">
+			Buscar disponibilidad del médico a partir de
+		  </label>
+
+		  <input
+			id="startSearchDate"
+			type="date"
+			class="form-control mb-3"
+		  >
+
+		  <button
+			id="searchAvailableSlotsBtn"
+			type="button"
+			class="btn btn-outline-primary w-100 mb-3"
+		  >
+			Buscar citas disponibles
+		  </button>
+
+		  <div id="availableSlotsContainer" class="d-none">
+
+			<label for="availableSlot" class="form-label fw-semibold">
+			  Próximas citas disponibles
+			</label>
+
+			<select id="availableSlot" class="form-select">
+			  <option value="">Selecciona una cita</option>
+			</select>
+
+			<small class="text-muted">
+			  Al seleccionar una cita se rellenarán la fecha y la hora automáticamente
+			</small>
+
+		  </div>
+
+		</div>
+
+
+            <div class="row">
+
+              <div class="col-md-6 mb-3">
+                <label for="date" class="form-label">
+                  Fecha <span style="color:red">*</span>
+                </label>
+
+                <input id="date" type="date" class="form-control" required>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="time" class="form-label">
+                  Hora <span style="color:red">*</span>
+                </label>
+
+                <input id="time" type="time" class="form-control" required>
+              </div>
+
+            </div>
+
+            <div class="mb-4">
+              <label for="reason" class="form-label">
+                Motivo de la consulta
+              </label>
+
+              <textarea
+                id="reason"
+                class="form-control"
+                rows="3"
+                placeholder="ejemplo: Síntomas empeoran"
+              ></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary main-btn w-100">
+              <i class="bi bi-save me-2"></i>
+              Guardar cita
+            </button>
+
+          </form>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+  
+  
+  
+  <!-- MODAL PARA ELIMINAR -->
+<div class="modal fade" id="deleteAppointmentModal" tabindex="-1">
+
+  <div class="modal-dialog modal-dialog-centered">
+
+    <div class="modal-content rounded-4">
+
+      <div class="modal-header">
+
+        <h5 class="bi bi-trash3 modal-title text-danger">
+          Eliminar cita
+        </h5>
+
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+
+      </div>
+
+      <div class="modal-body">
+
+        <p class="mb-0">
+          ¿Estás seguro de que quieres eliminar esta cita?
+        </p>
+
+      </div>
+
+      <div class="modal-footer">
+
+		<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+		  Cancelar
+		</button>
+
+        <button id="confirmDeleteAppointmentBtn" type="button" class="btn btn-danger">
+          Eliminar
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+  
+  
+  
+  
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Comprobar si el usuario ha iniciado sesión para que este .html esté disponible -->
+  <script src="../js/authentication.js"></script>
+
+  <!-- Doctor.js -->
+  <script src="../js/doctor.js"></script>
+
+
+
+
+
+  <!-- FOOTER -->
+  <footer class="text-white py-4 mt-5">
+
+    <div class="container d-flex flex-column flex-md-row
+      justify-content-between align-items-center gap-3">
+
+      <div class="fw-bold d-flex align-items-center gap-2">
+
+        <img src="../assets/images/hygeia_logo.png"
+          alt="Logo"
+          width="40">
+
+        HYGEIA
+
+      </div>
+
+      <small>
+        © 2026 Hygeia | Portal del Paciente
+      </small>
+
+    </div>
+
+  </footer>
+
+</body>
+  
+
+</html>

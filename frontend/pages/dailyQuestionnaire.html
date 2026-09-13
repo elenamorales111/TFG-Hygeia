@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <!-- Diseño responsive -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Título de la pestaña superior en el navegador -->
+  <title>Cuestionario Diario</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="../assets/images/hygeia_logo.png">
+  
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+  
+    /*Poner imagen de fondo en el body con una capa blanca clarita encima para 
+    poder leer el texto*/
+    body {
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.70),
+        rgba(255, 255, 255, 0.70)),
+        url("../assets/images/index_image.png");
+
+      background-size: cover;
+      background-position: center;
+      min-height: 100vh;
+
+      display: flex;
+      flex-direction: column;
+    }
+
+    /*Degradado azul de Navbar superior*/
+    .navbar {
+      background: linear-gradient(90deg, #004aad, #005fd4);
+    }
+    
+    /*HYGEIA en Navbar*/
+    .navbar-brand {
+      font-family: "Playfair Display", serif;
+      font-size: 2rem;
+      letter-spacing: 1px;
+    }
+
+    /*Tamaño logo Hygeia*/
+    .logo-img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+    }
+    
+    /*Tipografía de los títulos y subtítulos*/
+    h1, h2, h3, h4, h5, h6 {
+      font-family: "Playfair Display", serif;
+      color: #0b3d91;
+      font-weight: 700;
+    }
+	
+	/*Preguntas cuestionario de alimentación de color verde*/
+	.nutrition-question-card h5 {
+		color: #198754;
+	}
+
+    /*Tarjeta principal*/
+    .questionnaire-card {
+      border: none;
+      border-radius: 24px;
+      box-shadow: 0 10px 30px rgba(0, 74, 173, 0.18);
+    }
+
+    /*Tarjeta de cada cuestionario*/
+    .daily-card {
+      border-left: 8px solid #005fd4;
+      border-radius: 16px;
+      transition: transform 0.2s ease;
+    }
+
+    .daily-card:hover {
+      transform: translateY(-4px);
+    }
+
+    /*Tarjeta de cada pregunta*/
+    .question-card {
+      border-left: 6px solid #005fd4;
+      border-radius: 16px;
+      background-color: #ffffff;
+    }
+	
+	/*Tarjeta de cada pregunta cuestionario de alimentación*/
+	.nutrition-question-card {
+	  border-left: 6px solid #198754;
+	}
+
+    /*Botón principal*/
+    .main-btn {
+      background-color: #005fd4;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+
+    .main-btn:hover {
+      background-color: #004aad;
+    }
+	
+	/*Botón cuestionario de alimentación*/
+	.main-btn-green {
+		background-color: #198754;
+		border: none;
+		padding: 12px 30px;
+		border-radius: 12px;
+		font-weight: 600;
+	}
+
+	.main-btn-green:hover {
+		background-color: #157347;
+	}
+
+    /*Checkbox marcado*/
+    .form-check-input:checked {
+      background-color: #005fd4;
+      border-color: #005fd4;
+    }
+	
+	/*Checkbox de cuestionario de alimentación en verde*/
+	.nutrition-question-card .form-check-input:checked {
+		background-color: #198754;
+		border-color: #198754;
+	}
+	
+	.sleep-card {
+	  border-left: 8px solid #005fd4;
+	}
+
+	.nutrition-card {
+	  border-left: 8px solid #198754;
+	}
+    
+    /*Footer*/
+    footer {
+      background-color: #00357a;
+    }
+
+    main {
+      flex: 1;
+    }
+  
+  </style>
+
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-dark shadow py-3">
+
+    <!-- Container: Centra el contenido -->
+    <div class="container">
+
+      <a class="navbar-brand d-flex align-items-center gap-3" href="../../home.html">
+
+        <img
+          src="../assets/images/hygeia_logo.png"
+          alt="Hygeia Logo"
+          class="logo-img"
+        >
+
+        <span>HYGEIA</span>
+
+      </a>
+
+      <div>
+
+        <a href="../../home.html" class="btn btn-outline-light">
+          Home
+        </a>
+
+      </div>
+
+    </div>
+
+  </nav>
+
+  <!-- CUESTIONARIO DIARIO -->
+  <main class="container py-5">
+
+    <section class="row justify-content-center align-items-center">
+
+      <div class="col-md-10 col-lg-9">
+
+        <div class="card questionnaire-card">
+
+          <div class="card-body p-5">
+
+            <h1 class="text-center mb-2">
+              Cuestionario Diario
+            </h1>
+
+            <p class="text-center text-muted mb-5">
+              Esta sección de la web te será muy útil para recibir recomendaciones
+              para mejorar tu salud en base a tus respuestas en los cuestionarios.
+            </p>
+
+            <!-- CONTENEDORES DE CUESTIONARIOS -->
+            <div class="row g-4">
+
+              <!-- Cuestionario de sueño -->
+              <div class="col-md-6">
+
+                <div class="card daily-card sleep-card h-100">
+
+                  <div class="card-body text-center">
+
+                    <i class="bi bi-moon-stars fs-1 text-primary"></i>
+
+                    <h4 class="mt-3">
+                      Hábitos de sueño
+                    </h4>
+
+                    <p class="text-muted">
+                      ¿Crees que tienes buenos hábitos de sueño?
+                      <br>
+                      ¡Realiza este cuestionario para averiguarlo!
+                    </p>
+
+                    <button
+                      class="btn btn-primary main-btn"
+                      data-bs-toggle="modal"
+                      data-bs-target="#sleepModal"
+                    >
+                      Comenzar
+                    </button>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+              <!-- Cuestionario de alimentación -->
+              <div class="col-md-6">
+
+                <div class="card daily-card nutrition-card h-100">
+
+                  <div class="card-body text-center">
+
+                    <i class="bi bi-egg-fried fs-1 text-success"></i>
+
+                    <h4 class="mt-3 text-success">
+					  Hábitos alimenticios
+					</h4>
+
+                    <p class="text-muted">
+                      ¿Crees que sigues una alimentación adecuada?
+                      <br>
+                      ¡Realiza este cuestionario para averiguarlo!
+                    </p>
+					
+
+                    <button
+					  class="btn btn-success main-btn-green"
+					  data-bs-toggle="modal"
+					  data-bs-target="#nutritionModal"
+					>
+					  Comenzar
+					</button>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- MODAL SUEÑO -->
+  <div class="modal fade" id="sleepModal" tabindex="-1">
+
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+
+      <div class="modal-content rounded-4">
+
+        <div class="modal-header">
+
+          <h5 class="modal-title text-primary fw-bold">
+            Cuestionario de sueño
+          </h5>
+
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal">
+          </button>
+
+        </div>
+
+        <div class="modal-body">
+
+          <p class="text-muted">
+            Responde de manera honesta a todas las preguntas del cuestionario para
+            recibir recomendaciones de Hygeia
+          </p>
+
+          <form id="sleepForm">
+
+            <!-- Pregunta 1 -->
+            <div class="card question-card p-4 mb-4">
+
+              <h5>
+                1. ¿Cuántas horas has dormido esta noche?
+              </h5>
+
+              <div class="form-check">
+                <input class="form-check-input sleep-option" type="checkbox" name="sleepHours" value="good">
+                <label class="form-check-label">De 8 a 10 horas</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input sleep-option" type="checkbox" name="sleepHours" value="medium">
+                <label class="form-check-label">De 6 a 8 horas</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input sleep-option" type="checkbox" name="sleepHours" value="bad">
+                <label class="form-check-label">Menos de 6 horas</label>
+              </div>
+
+            </div>
+
+            <!-- Pregunta 2 -->
+            <div class="card question-card p-4 mb-4">
+
+              <h5>
+                2. ¿Has usado aparatos tecnológicos poco antes de irte a dormir?
+              </h5>
+
+              <div class="form-check">
+                <input class="form-check-input sleep-option" type="checkbox" name="screens" value="good">
+                <label class="form-check-label">No</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input sleep-option" type="checkbox" name="screens" value="medium">
+                <label class="form-check-label">Sí, una media hora</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input sleep-option" type="checkbox" name="screens" value="bad">
+                <label class="form-check-label">Sí, más de media hora</label>
+              </div>
+
+            </div>
+
+            <!-- Pregunta 3 -->
+            <div class="card question-card p-4 mb-4">
+
+              <h5>
+                3. ¿Has tomado alguna bebida con cafeína por la tarde o noche?
+              </h5>
+
+              <div class="form-check">
+                <input class="form-check-input sleep-option" type="checkbox" name="caffeine" value="good">
+                <label class="form-check-label">No</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input sleep-option" type="checkbox" name="caffeine" value="medium">
+                <label class="form-check-label">Sí, a la hora de merendar</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input sleep-option" type="checkbox" name="caffeine" value="bad">
+                <label class="form-check-label">Sí, a la hora de cenar</label>
+              </div>
+
+            </div>
+            
+            <!-- Pregunta 4 -->
+            <div class="card question-card p-4 mb-4">
+
+              <h5>
+                4. ¿Has cenado poco antes de irte a dormir?
+              </h5>
+
+              <div class="form-check">
+                <input class="form-check-input sleep-option" type="checkbox" name="dinner" value="good">
+                <label class="form-check-label">Sí, unas dos horas antes</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input sleep-option" type="checkbox" name="dinner" value="medium">
+                <label class="form-check-label">No, no he cenado</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input sleep-option" type="checkbox" name="dinner" value="bad">
+                <label class="form-check-label">Sí, media hora antes</label>
+              </div>
+
+            </div>
+
+            <!-- Pregunta 5 -->
+            <div class="card question-card p-4 mb-4">
+
+              <h5>
+                5. ¿Has hecho ejercicio antes de dormir?
+              </h5>
+
+              <div class="form-check">
+                <input class="form-check-input sleep-option" type="checkbox" name="exercise" value="good">
+                <label class="form-check-label">No o más de dos horas antes</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input sleep-option" type="checkbox" name="exercise" value="medium">
+                <label class="form-check-label">Sí, una hora antes</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input sleep-option" type="checkbox" name="exercise" value="bad">
+                <label class="form-check-label">Sí, media hora antes</label>
+              </div>
+
+            </div>
+
+            <!-- Pregunta 6 -->
+            <div class="card question-card p-4 mb-4">
+
+              <h5>
+                6. ¿Te has ido a dormir a una hora parecida a la de otros días?
+              </h5>
+
+              <div class="form-check">
+                <input class="form-check-input sleep-option" type="checkbox" name="schedule" value="good">
+                <label class="form-check-label">Sí, me suelo ir a dormir a la misma hora todos los días</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input sleep-option" type="checkbox" name="schedule" value="medium">
+                <label class="form-check-label">Más o menos</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input sleep-option" type="checkbox" name="schedule" value="bad">
+                <label class="form-check-label">No</label>
+              </div>
+
+            </div>
+
+            <!-- Pregunta 7 -->
+            <div class="card question-card p-4 mb-4">
+
+              <h5>
+                7. ¿Cuánto has tardado en dormirte?
+              </h5>
+
+              <div class="form-check">
+                <input class="form-check-input sleep-option" type="checkbox" name="fallAsleep" value="good">
+                <label class="form-check-label">Poco, unos cinco minutos</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input sleep-option" type="checkbox" name="fallAsleep" value="medium">
+                <label class="form-check-label">Más de 30 minutos</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input sleep-option" type="checkbox" name="fallAsleep" value="bad">
+                <label class="form-check-label">Más de una hora</label>
+              </div>
+
+            </div>
+
+            <!-- Pregunta 8 -->
+            <div class="card question-card p-4 mb-4">
+
+              <h5>
+                8. ¿Te has despertado durante la noche?
+              </h5>
+
+              <div class="form-check">
+                <input class="form-check-input sleep-option" type="checkbox" name="awakenings" value="good">
+                <label class="form-check-label">No, he dormido seguido</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input sleep-option" type="checkbox" name="awakenings" value="medium">
+                <label class="form-check-label">Sí, una o dos veces</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input sleep-option" type="checkbox" name="awakenings" value="bad">
+                <label class="form-check-label">Sí, unas cuantas veces</label>
+              </div>
+
+            </div>
+
+            <!-- Pregunta 9 -->
+            <div class="card question-card p-4 mb-4">
+
+              <h5>
+                9. ¿Te han dicho alguna vez que roncas?
+              </h5>
+
+              <div class="form-check">
+                <input class="form-check-input sleep-option" type="checkbox" name="snoring" value="good">
+                <label class="form-check-label">No</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input sleep-option" type="checkbox" name="snoring" value="medium">
+                <label class="form-check-label">No lo sé</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input sleep-option" type="checkbox" name="snoring" value="bad">
+                <label class="form-check-label">Sí</label>
+              </div>
+
+            </div>
+
+            <!-- Pregunta 10 -->
+            <div class="card question-card p-4 mb-4">
+
+              <h5>
+                10. ¿Cómo te has sentido durante el día de hoy?
+              </h5>
+
+              <div class="form-check">
+                <input class="form-check-input sleep-option" type="checkbox" name="dayTiredness" value="good">
+                <label class="form-check-label">Con mucha energía y facilidad para concentrarme</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input sleep-option" type="checkbox" name="dayTiredness" value="medium">
+                <label class="form-check-label">Un poco cansado</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input sleep-option" type="checkbox" name="dayTiredness" value="bad">
+                <label class="form-check-label">Muy cansado o con dificultad para concentrarme</label>
+              </div>
+
+            </div>
+
+            <button type="submit" class="btn btn-primary main-btn w-100">
+              Ver recomendaciones
+            </button>
+
+          </form>
+
+          <div id="sleepMessage" class="alert mt-4 d-none"></div>
+
+          <div id="sleepRecommendationsContainer" class="card mt-4 d-none">
+
+            <div class="card-body">
+
+              <h4 class="text-primary mb-3">
+                Recomendaciones personalizadas
+              </h4>
+
+              <ul id="sleepRecommendationsList" class="list-group list-group-flush"></ul>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- MODAL ALIMENTACIÓN -->
+  <div class="modal fade" id="nutritionModal" tabindex="-1">
+
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+
+      <div class="modal-content rounded-4">
+
+        <div class="modal-header">
+
+          <h5 class="modal-title text-success fw-bold">
+            Cuestionario de alimentación
+          </h5>
+
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal">
+          </button>
+
+        </div>
+
+        <div class="modal-body">
+
+          <p class="text-muted">
+            Responde de manera honesta a todas las preguntas del cuestionario para
+            recibir recomendaciones de Hygeia
+          </p>
+
+          <form id="nutritionForm">
+
+            <!-- Pregunta 1 -->
+            <div class="card question-card nutrition-question-card p-4 mb-4">
+              <h5>1. ¿Has desayunado hoy?</h5>
+
+              <div class="form-check">
+                <input class="form-check-input nutrition-option" type="checkbox" name="breakfast" value="good">
+                <label class="form-check-label">Sí</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input nutrition-option" type="checkbox" name="breakfast" value="medium">
+                <label class="form-check-label">Sí, pero no mucho</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input nutrition-option" type="checkbox" name="breakfast" value="bad">
+                <label class="form-check-label">No</label>
+              </div>
+            </div>
+
+            <!-- Pregunta 2 -->
+            <div class="card question-card nutrition-question-card p-4 mb-4">
+              <h5>2. ¿Has comido hoy?</h5>
+
+              <div class="form-check">
+                <input class="form-check-input nutrition-option" type="checkbox" name="lunch" value="good">
+                <label class="form-check-label">Sí</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input nutrition-option" type="checkbox" name="lunch" value="medium">
+                <label class="form-check-label">Sí, pero no mucho</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input nutrition-option" type="checkbox" name="lunch" value="bad">
+                <label class="form-check-label">No</label>
+              </div>
+            </div>
+
+            <!-- Pregunta 3 -->
+            <div class="card question-card nutrition-question-card p-4 mb-4">
+              <h5>3. ¿Has cenado hoy?</h5>
+
+              <div class="form-check">
+                <input class="form-check-input nutrition-option" type="checkbox" name="dinnerNutrition" value="good">
+                <label class="form-check-label">Sí</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input nutrition-option" type="checkbox" name="dinnerNutrition" value="medium">
+                <label class="form-check-label">Sí, pero no mucho</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input nutrition-option" type="checkbox" name="dinnerNutrition" value="bad">
+                <label class="form-check-label">No</label>
+              </div>
+            </div>
+
+            <!-- Pregunta 4 -->
+            <div class="card question-card nutrition-question-card p-4 mb-4">
+              <h5>4. ¿Cuánta agua crees que has bebido?</h5>
+
+              <div class="form-check">
+                <input class="form-check-input nutrition-option" type="checkbox" name="water" value="good">
+                <label class="form-check-label">Más de 1,5 litros</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input nutrition-option" type="checkbox" name="water" value="medium">
+                <label class="form-check-label">Entre 0,5 y 1,5 litros</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input nutrition-option" type="checkbox" name="water" value="bad">
+                <label class="form-check-label">Menos de 0,5 litros</label>
+              </div>
+            </div>
+
+            <!-- Pregunta 5 -->
+            <div class="card question-card nutrition-question-card p-4 mb-4">
+              <h5>5. ¿Has tomado algún refresco?</h5>
+
+              <div class="form-check">
+                <input class="form-check-input nutrition-option" type="checkbox" name="softDrinks" value="good">
+                <label class="form-check-label">No</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input nutrition-option" type="checkbox" name="softDrinks" value="medium">
+                <label class="form-check-label">Sí, uno</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input nutrition-option" type="checkbox" name="softDrinks" value="bad">
+                <label class="form-check-label">Sí, más de uno</label>
+              </div>
+            </div>
+
+            <!-- Pregunta 6 -->
+            <div class="card question-card nutrition-question-card p-4 mb-4">
+              <h5>6. ¿Has comido fruta en algún momento del día?</h5>
+
+              <div class="form-check">
+                <input class="form-check-input nutrition-option" type="checkbox" name="fruit" value="good">
+                <label class="form-check-label">Sí, más de una</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input nutrition-option" type="checkbox" name="fruit" value="medium">
+                <label class="form-check-label">Sí, una</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input nutrition-option" type="checkbox" name="fruit" value="bad">
+                <label class="form-check-label">No</label>
+              </div>
+            </div>
+
+            <!-- Pregunta 7 -->
+            <div class="card question-card nutrition-question-card p-4 mb-4">
+              <h5>7. ¿Has comido entre horas por ansiedad o aburrimiento?</h5>
+
+              <div class="form-check">
+                <input class="form-check-input nutrition-option" type="checkbox" name="emotionalEating" value="good">
+                <label class="form-check-label">No</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input nutrition-option" type="checkbox" name="emotionalEating" value="medium">
+                <label class="form-check-label">Sí, una vez</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input nutrition-option" type="checkbox" name="emotionalEating" value="bad">
+                <label class="form-check-label">Sí, más de una vez</label>
+              </div>
+            </div>
+
+            <!-- Pregunta 8 -->
+            <div class="card question-card nutrition-question-card p-4 mb-4">
+              <h5>8. ¿Has realizado las comidas principales del día a horarios regulares?</h5>
+
+              <div class="form-check">
+                <input class="form-check-input nutrition-option" type="checkbox" name="regularMeals" value="good">
+                <label class="form-check-label">Sí</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input nutrition-option" type="checkbox" name="regularMeals" value="medium">
+                <label class="form-check-label">Más o menos</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input nutrition-option" type="checkbox" name="regularMeals" value="bad">
+                <label class="form-check-label">No</label>
+              </div>
+            </div>
+
+            <!-- Pregunta 9 -->
+            <div class="card question-card nutrition-question-card p-4 mb-4">
+              <h5>9. ¿Has comido más o menos cantidad por pensar en tu físico?</h5>
+
+              <div class="form-check">
+                <input class="form-check-input nutrition-option" type="checkbox" name="bodyImageEating" value="good">
+                <label class="form-check-label">No</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input nutrition-option" type="checkbox" name="bodyImageEating" value="medium">
+                <label class="form-check-label">Alguna vez</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input nutrition-option" type="checkbox" name="bodyImageEating" value="bad">
+                <label class="form-check-label">Sí, frecuentemente</label>
+              </div>
+            </div>
+
+            <!-- Pregunta 10 -->
+            <div class="card question-card nutrition-question-card p-4 mb-4">
+              <h5>10. ¿Al comer has sentido que te has llenado muy rápido?</h5>
+
+              <div class="form-check">
+                <input class="form-check-input nutrition-option" type="checkbox" name="nutritionAssessment" value="good">
+                <label class="form-check-label">No</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input nutrition-option" type="checkbox" name="nutritionAssessment" value="medium">
+                <label class="form-check-label">A veces</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input nutrition-option" type="checkbox" name="nutritionAssessment" value="bad">
+                <label class="form-check-label">Sí</label>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-success main-btn-green w-100">
+              Ver recomendaciones
+            </button>
+
+          </form>
+
+          <div id="nutritionMessage" class="alert mt-4 d-none"></div>
+
+          <div id="nutritionRecommendationsContainer" class="card mt-4 d-none">
+
+            <div class="card-body">
+
+              <h4 class="text-success mb-3">
+                Recomendaciones personalizadas
+              </h4>
+
+              <ul id="nutritionRecommendationsList" class="list-group list-group-flush"></ul>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="text-white py-4 mt-5">
+
+    <div class="container d-flex flex-column flex-md-row
+      justify-content-between align-items-center gap-3">
+
+      <div class="fw-bold d-flex align-items-center gap-2">
+
+        <img src="../assets/images/hygeia_logo.png"
+          alt="Logo"
+          width="40">
+
+        HYGEIA
+
+      </div>
+
+      <small>
+        © 2026 Hygeia | Portal del Paciente
+      </small>
+
+    </div>
+
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Comprobar si el usuario ha iniciado sesión para que este .html esté disponible -->
+  <script src="../js/authentication.js"></script>
+  
+  <!-- Bloquear acceso a médicos -->
+  <script>
+
+    const role = localStorage.getItem("role");
+
+    if (role === "DOCTOR") {
+
+      window.location.href = "/home.html";
+
+    }
+
+  </script>
+
+  <!-- dailyQuestionnaire.js -->
+  <script src="../js/dailyQuestionnaire.js"></script>
+
+</body>
+
+</html>

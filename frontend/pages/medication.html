@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <!-- Diseño responsive -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Título de la pestaña superior en el navegador -->
+  <title>Medicación</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="../assets/images/hygeia_logo.png">
+  
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+
+  /*Poner imagen de fondo en el body con una capa blanca clarita encima para 
+  poder leer el texto*/
+  body {
+	  background:
+		linear-gradient(rgba(255, 255, 255, 0.70),
+		rgba(255, 255, 255, 0.70)),
+		url("../assets/images/index_image.png");
+
+	  background-size: cover;
+	  background-position: center;
+
+	  min-height: 100vh;
+	  display: flex;
+	  flex-direction: column;
+  }
+
+  /*Degradado azul de Navbar superior*/
+  .navbar {
+    background: linear-gradient(90deg, #004aad, #005fd4);
+  }
+
+  /*HYGEIA en Navbar*/
+  .navbar-brand {
+    font-family: "Playfair Display", serif;
+    font-size: 2rem;
+    letter-spacing: 1px;
+  }
+
+  /*Tamaño logo Hygeia*/
+  .logo-img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+  }
+  
+  	/*Tipografía de los títulos y subtítulos*/
+	h1, h2, h3, h4, h5, h6 {
+	  font-family: "Playfair Display", serif;
+	  color: #0b3d91;
+	  font-weight: 700;
+	}
+
+  /*Cuadro principal de la agenda de medicinas*/
+  .medication-card {
+    border: none;
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(0, 74, 173, 0.18);
+  }
+
+
+  /*Botón principal para añadir medicinas*/
+  .main-btn {
+    background-color: #005fd4;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 12px;
+    font-weight: 600;
+  }
+
+  /*Efecto hover del botón principal*/
+  .main-btn:hover {
+    background-color: #004aad;
+  }
+
+  /*Tarjeta individual de cada medicina*/
+  .medicine-item {
+    border-left: 8px solid #005fd4;
+    border-radius: 16px;
+    transition: 0.3s;
+  }
+
+  /*Efecto hover sobre las medicinas*/
+  .medicine-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 74, 173, 0.12);
+  }
+
+  /*Nombre de la medicina*/
+  .medicine-name {
+    color: #0b5ed7;
+    font-weight: 700;
+    font-size: 1.3rem;
+  }
+
+  /*Texto secundario de la medicina*/
+  .medicine-info {
+    color: #4b5563;
+    font-size: 0.95rem;
+  }
+  
+  .frequency-daily {
+    border-left-color: #198754;
+  }
+
+  .frequency-medium {
+    border-left-color: #ffc107;
+  }
+
+.frequency-low {
+  border-left-color: #dc3545;
+}
+
+  /*Badge verde para medicinas diarias*/
+  .badge-daily {
+    background-color: #198754;
+    color: white;
+    border-radius: 12px;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  /*Badge amarillo para medicinas de frecuencia media*/
+  .badge-medium {
+    background-color: #ffc107;
+    color: black;
+    border-radius: 12px;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  /*Badge rojo para vacunas o medicinas poco frecuentes*/
+  .badge-low {
+    background-color: #dc3545;
+    color: white;
+    border-radius: 12px;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  /*Botones de editar y eliminar*/
+  .action-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+  }
+
+  /*Separación entre las tarjetas de medicinas*/
+  .medicine-list .card {
+    margin-bottom: 18px;
+  }
+  
+  	/*Footer*/
+	footer {
+      background-color: #00357a;
+	  margin-top: auto;
+    }
+
+</style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-dark shadow py-3">
+
+    <div class="container">
+
+      <a class="navbar-brand d-flex align-items-center gap-3" href="../../home.html">
+        <img src="../assets/images/hygeia_logo.png" alt="Hygeia Logo" class="logo-img">
+        <span>HYGEIA</span>
+      </a>
+
+      <div>
+        <a href="../../home.html" class="btn btn-outline-light">
+          Home
+        </a>
+      </div>
+
+    </div>
+
+  </nav>
+
+  <!-- AGENDA DE MEDICINAS -->
+  <main class="flex-grow-1">
+  
+  <div class="container py-5">
+
+    <section class="row justify-content-center align-items-center">
+
+      <div class="col-md-12 col-lg-10">
+
+        <div class="card medication-card">
+
+          <div class="card-body p-5">
+
+            <h1 class="medication-title text-center mb-2">
+              Agenda de medicinas
+            </h1>
+
+            <p id="medicationSubtitle" class="text-center text-muted mb-4">
+               La agenda de esta sección de la web te será muy útil para organizar tus dosis de medicamentos
+            </p>
+			
+			<div id="doctorPatientSearchContainer" class="d-none mb-4">
+
+		  <button
+			id="showPatientMedicinesBtn"
+			class="btn btn-primary main-btn w-100 mb-3"
+			type="button">
+			Ver medicinas de pacientes
+		  </button>
+
+		  <div id="doctorPatientSelectContainer" class="d-none">
+
+			<label for="doctorPatientSelect" class="form-label">
+			  Paciente <span style="color:red">*</span>
+			</label>
+
+			<select id="doctorPatientSelect" class="form-select" required>
+			  <option value="">Selecciona un paciente</option>
+			</select>
+
+		  </div>
+
+		</div>
+
+		<div id="patientMedicationContent">
+
+            <!-- DASHBOARD -->
+            <div class="row g-4 mb-4">
+
+              <div class="col-md-4">
+                <div class="card dashboard-card text-center p-3">
+                  <i class="bi bi-capsule-pill text-success display-5"></i>
+                  <h3 id="dailyCount" class="fw-bold mt-2">0</h3>
+                  <p class="text-muted mb-0">Medicinas diarias</p>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="card dashboard-card text-center p-3">
+                  <i class="bi bi-capsule-pill text-warning display-5"></i>
+                  <h3 id="mediumCount" class="fw-bold mt-2">0</h3>
+                  <p class="text-muted mb-0">Medicinas menos frecuentes</p>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="card dashboard-card text-center p-3">
+                  <i class="bi bi-capsule-pill text-danger display-5"></i>
+                  <h3 id="lowCount" class="fw-bold mt-2">0</h3>
+                  <p class="text-muted mb-0">Medicinas poco frecuentes o vacunas</p>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Leyenda -->
+            <div class="d-flex flex-wrap gap-3 justify-content-center mb-4">
+              <span class="badge badge-daily p-2">Diaria</span>
+              <span class="badge badge-medium p-2">Frecuencia media</span>
+              <span class="badge badge-low p-2">Frecuencia baja o Vacuna</span>
+            </div>
+
+            <!-- Botón para abrir el modal de nueva medicina -->
+            <button
+				id="openMedicationModalBtn"
+				class="btn btn-primary main-btn w-100"
+				data-bs-toggle="modal"
+				data-bs-target="#medicationModal">
+				
+              <i class="bi bi-plus-square me-2"></i>
+              Añadir nueva medicina
+            </button>
+
+            <div id="message" class="alert mt-4 d-none"></div>
+			
+			</div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+  <!-- LISTA DE MEDICINAS -->
+  <div id="medicationsListContainer" class="container mb-5">
+
+    <h3 class="text-primary mt-4 mb-4">
+      Medicinas registradas
+    </h3>
+
+    <div id="medicationsList" class="list-group mb-4"></div>
+
+  </div>
+  
+  </div>
+  
+  </main>
+
+  <!-- MODAL DE BOOTSTRAP PARA AÑADIR O EDITAR MEDICINA -->
+  <div class="modal fade" id="medicationModal" tabindex="-1">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+      <div class="modal-content rounded-4">
+
+        <div class="modal-header">
+
+          <h5 class="modal-title text-primary fw-bold">
+            Medicina
+          </h5>
+
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+
+        </div>
+
+        <div class="modal-body">
+
+          <form id="medicationForm">
+
+            <!-- Input oculto para saber si estamos editando -->
+            <input id="medicationId" type="hidden">
+			
+
+            <div class="mb-3">
+              <label for="medicine" class="form-label">
+                Medicina <span style="color:red">*</span>
+              </label>
+
+              <input
+                id="medicine"
+                type="text"
+                class="form-control"
+                placeholder="ejemplo: Ibuprofeno"
+                required
+              >
+            </div>
+
+            <div class="mb-3">
+              <label for="dailyDose" class="form-label">
+                Dosis <span style="color:red">*</span>
+              </label>
+
+              <input
+                id="dailyDose"
+                type="text"
+                class="form-control"
+                placeholder="ejemplo: 1 comprimido cada 8 horas"
+                required
+              >
+            </div>
+
+            <div class="mb-3">
+              <label for="time" class="form-label">
+                Hora <span style="color:red">*</span>
+              </label>
+
+              <input
+                id="time"
+                type="time"
+                class="form-control"
+                required
+              >
+            </div>
+
+            <div class="mb-4">
+              <label for="frequency" class="form-label">
+                Frecuencia <span style="color:red">*</span>
+              </label>
+
+              <select id="frequency" class="form-select" required>
+                <option value="">Selecciona una opción</option>
+                <option value="FRECUENCIA_DIARIA">Diaria</option>
+                <option value="FRECUENCIA_MEDIA">Frecuencia media</option>
+                <option value="FRECUENCIA_BAJA">Frecuencia baja o Vacuna</option>
+              </select>
+			  
+				  <!-- Seleccionar días de las semana 
+				  que se tomen medicinas de frecuencia media -->
+					<div id="weekDaysContainer" class="mb-4 d-none">
+
+					  <label class="form-label">
+						Días de la semana
+					  </label>
+
+					  <div class="d-flex flex-wrap gap-2">
+
+						<div class="form-check">
+						  <input class="form-check-input week-day" type="checkbox" value="L" id="monday">
+						  <label class="form-check-label" for="monday">Lunes</label>
+						</div>
+
+						<div class="form-check">
+						  <input class="form-check-input week-day" type="checkbox" value="M" id="tuesday">
+						  <label class="form-check-label" for="tuesday">Martes</label>
+						</div>
+
+						<div class="form-check">
+						  <input class="form-check-input week-day" type="checkbox" value="X" id="wednesday">
+						  <label class="form-check-label" for="wednesday">Miércoles</label>
+						</div>
+
+						<div class="form-check">
+						  <input class="form-check-input week-day" type="checkbox" value="J" id="thursday">
+						  <label class="form-check-label" for="thursday">Jueves</label>
+						</div>
+
+						<div class="form-check">
+						  <input class="form-check-input week-day" type="checkbox" value="V" id="friday">
+						  <label class="form-check-label" for="friday">Viernes</label>
+						</div>
+						
+						<div class="form-check">
+						  <input class="form-check-input week-day" type="checkbox" value="S" id="saturday">
+						  <label class="form-check-label" for="saturday">Sábado</label>
+						</div>
+						
+						<div class="form-check">
+						  <input class="form-check-input week-day" type="checkbox" value="D" id="sunday">
+						  <label class="form-check-label" for="sunday">Domingo</label>
+						</div>
+
+					  </div>
+
+					</div>
+
+				<!-- Seleccionar día de medicinas poco frecuentes o vacunas  -->
+				<div id="specificDateContainer" class="mb-4 d-none">
+
+				  <label for="specificDate" class="form-label">
+					Fecha
+				  </label>
+
+				  <input
+					id="specificDate"
+					type="date"
+					class="form-control"
+				  >
+
+				</div>
+			  
+            </div>
+
+            <button type="submit" class="btn btn-primary main-btn w-100">
+              <i class="bi bi-save me-2"></i>
+              Guardar medicina
+            </button>
+
+          </form>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+  
+  
+  <!-- MODAL PARA ELIMINAR MEDICINAS-->
+<div class="modal fade" id="deleteMedicationModal" tabindex="-1">
+
+  <div class="modal-dialog modal-dialog-centered">
+
+    <div class="modal-content rounded-4">
+
+      <div class="modal-header">
+
+        <h5 class="bi bi-trash3 modal-title text-danger">
+          Eliminar medicina
+        </h5>
+
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+
+      </div>
+
+      <div class="modal-body">
+
+        <p class="mb-0">
+          ¿Estás seguro de que quieres eliminar esta medicina?
+        </p>
+
+      </div>
+
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+          Cancelar
+        </button>
+
+        <button id="confirmDeleteMedicationBtn" type="button" class="btn btn-danger">
+          Eliminar
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+  
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Comprobar si el usuario ha iniciado sesión para que este .html esté disponible -->
+  <script src="../js/authentication.js"></script>
+
+  <!-- Medication.js -->
+  <script src="../js/medication.js"></script>
+  
+  
+  
+  
+  
+    <!-- FOOTER -->
+  <footer class="text-white py-4">
+
+    <div class="container d-flex flex-column flex-md-row
+      justify-content-between align-items-center gap-3">
+
+      <div class="fw-bold d-flex align-items-center gap-2">
+
+        <img src="../assets/images/hygeia_logo.png"
+          alt="Logo"
+          width="40">
+
+        HYGEIA
+
+      </div>
+
+      <small>
+        © 2026 Hygeia | Portal del Paciente
+      </small>
+
+    </div>
+
+  </footer>
+
+</body>
+
+</html>

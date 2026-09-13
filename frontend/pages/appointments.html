@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <!-- Diseño responsive -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Título de la pestaña superior en el navegador -->
+  <title>Agenda de citas médicas</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="../assets/images/hygeia_logo.png">
+  
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+
+    /*Poner imagen de fondo en el body con una capa blanca clarita encima para 
+    poder leer el texto*/
+    body {
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.70),
+        rgba(255, 255, 255, 0.70)),
+        url("../assets/images/index_image.png");
+
+      background-size: cover;
+      background-position: center;
+      min-height: 100vh;
+    }
+	
+
+    /*Degradado azul de Navbar superior*/
+    .navbar {
+      background: linear-gradient(90deg, #004aad, #005fd4);
+    }
+
+    /*HYGEIA en Navbar*/
+    .navbar-brand {
+      font-family: "Playfair Display", serif;
+      font-size: 2rem;
+      letter-spacing: 1px;
+    }
+
+    /*Tamaño logo Hygeia*/
+    .logo-img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+    }
+	
+	/*Tipografía de los títulos y subtítulos*/
+	h1, h2, h3, h4, h5, h6 {
+	  font-family: "Playfair Display", serif;
+	  color: #0b3d91;
+	  font-weight: 700;
+	}
+
+    /*Cuadro principal de la agenda*/
+    .appointment-card {
+      border: none;
+      border-radius: 24px;
+      box-shadow: 0 10px 30px rgba(0, 74, 173, 0.18);
+    }
+
+
+    /*Botón principal*/
+    .main-btn {
+      background-color: #005fd4;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+
+    .main-btn:hover {
+      background-color: #004aad;
+    }
+
+    /*Tabla del calendario*/
+    .calendar-table {
+      width: 100%;
+      table-layout: fixed;
+      border-collapse: collapse;
+      background-color: white;
+    }
+
+    /*Cabecera del calendario: lunes, martes, miércoles...*/
+    .calendar-table th {
+      background-color: #005fd4;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      border: 1px solid #004aad;
+      font-size: 0.9rem;
+    }
+
+    /*Cada celda representa un día del calendario*/
+    .calendar-table td {
+      height: 120px;
+      vertical-align: top;
+      border: 1px solid #bfc7d1;
+      padding: 8px;
+      background-color: white;
+    }
+
+    /*Efecto al pasar el ratón por encima de un día*/
+    .calendar-table td:hover {
+      background-color: #eef6ff;
+      cursor: pointer;
+    }
+
+    /*Número del día*/
+    .day-number {
+      font-weight: bold;
+      color: #1f2937;
+      font-size: 0.9rem;
+    }
+
+    /*Fines de semana en rojo*/
+    .weekend .day-number {
+      color: red;
+    }
+
+    /*Días que pertenecen al mes anterior o siguiente*/
+    .other-month {
+      background-color: #e5e5e5 !important;
+    }
+
+    /*Cita pintada dentro de un día*/
+	.appointment-badge {
+	  display: block;
+	  margin-top: 4px;
+	  padding: 3px 6px;
+	  background-color: #0d6efd;
+	  color: white;
+	  border-radius: 5px;
+	  font-size: 0.7rem;
+	}
+	
+	/*Footer*/
+	footer {
+      background-color: #00357a;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-dark shadow py-3">
+
+    <!-- Container: Centra el contenido -->
+    <div class="container">
+
+      <a class="navbar-brand d-flex align-items-center gap-3" href="../../home.html">
+
+        <img src="../assets/images/hygeia_logo.png" alt="Hygeia Logo" class="logo-img">
+
+        <span>HYGEIA</span>
+
+      </a>
+
+      <div>
+        <a href="../../home.html" class="btn btn-outline-light">
+          Home
+        </a>
+      </div>
+
+    </div>
+
+  </nav>
+
+  <!-- AGENDA DE CITAS MÉDICAS -->
+  <main class="container py-5">
+
+    <section class="row justify-content-center align-items-center">
+
+      <div class="col-md-12 col-lg-11">
+
+        <div class="card appointment-card">
+
+          <div class="card-body p-5">
+
+            <h1 class="appointment-title text-center mb-2">
+              Agenda de citas médicas
+            </h1>
+
+            <p class="text-center text-muted mb-4">
+              La agenda de esta sección de la web te será muy útil para organizar tus próximas citas médicas
+            </p>
+
+            <!-- Botones para cambiar de mes -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+
+              <button id="previousMonthBtn" class="btn btn-outline-primary">
+                <i class="bi bi-chevron-left"></i>
+                Mes anterior
+              </button>
+
+              <h2 id="monthTitle" class="h4 fw-bold text-primary mb-0"></h2>
+
+              <button id="nextMonthBtn" class="btn btn-outline-primary">
+                Mes siguiente
+                <i class="bi bi-chevron-right"></i>
+              </button>
+
+            </div>
+
+            <!-- Calendario grande -->
+            <table class="calendar-table mb-4">
+
+              <thead>
+                <tr>
+                  <th>Lunes</th>
+                  <th>Martes</th>
+                  <th>Miércoles</th>
+                  <th>Jueves</th>
+                  <th>Viernes</th>
+                  <th>Sábado</th>
+                  <th>Domingo</th>
+                </tr>
+              </thead>
+
+              <!-- Aquí JavaScript genera los días del calendario -->
+              <tbody id="calendarBody"></tbody>
+
+            </table>
+
+            <!-- Botón para abrir el modal de nueva cita -->
+            <button id="addAppointmentBtn"
+			
+				class="btn btn-primary main-btn w-100" 
+				data-bs-toggle="modal" 
+				data-bs-target="#appointmentModal">
+				
+              <i class="bi bi-plus-square me-2"></i>
+              Añadir nueva cita
+            </button>
+
+            <div id="message" class="alert mt-4 d-none"></div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+  
+  <!-- Listado de citas médicas registradas en la web -->
+	<h3 class="text-primary mt-5 mb-4 ms-3">
+	  Citas médicas registradas
+	</h3>
+
+  <div id="appointmentsList" class="list-group mb-4"></div>
+
+  <!-- MODAL DE BOOTSTRAP PARA AÑADIR UNA NUEVA CITA -->
+  <div class="modal fade" id="appointmentModal" tabindex="-1">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+      <div class="modal-content rounded-4">
+
+        <div class="modal-header">
+
+          <h5 class="modal-title text-primary fw-bold">
+            Cita médica
+          </h5>
+
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+
+        </div>
+
+        <div class="modal-body">
+
+		<form id="appointmentForm">
+
+		  <input id="appointmentId" type="hidden">
+		  
+		  <div id="patientSelectContainer" class="mb-3 d-none">
+		  <label for="patientSelect" class="form-label">
+			Paciente <span style="color:red">*</span>
+		  </label>
+
+		  <select id="patientSelect" class="form-select">
+			<option value="">Selecciona un paciente</option>
+		  </select>
+		</div>
+
+		<div class="mb-3">
+		
+			<label for="medicalCenter" class="form-label">
+			  Hospital <span style="color:red">*</span>
+			</label>
+
+		<select id="medicalCenter" class="form-select" required>
+		  <option value="">Selecciona un hospital</option>
+		</select>
+		
+		</div>
+
+		  <div class="mb-3">
+			<label for="doctor" class="form-label">
+			  Médico <span style="color:red">*</span>
+			</label>
+
+			<select id="doctor" class="form-select" required disabled>
+			  <option value="">Primero escribe un hospital</option>
+			</select>
+		  </div>
+			
+			<!-- Buscar próximas citas disponibles -->
+		<div class="card bg-light border-0 rounded-4 p-3 mb-4">
+
+		  <label for="startSearchDate" class="form-label fw-semibold">
+			Buscar disponibilidad del médico a partir de
+		  </label>
+
+		  <input
+			id="startSearchDate"
+			type="date"
+			class="form-control mb-3"
+		  >
+
+		  <button
+			id="searchAvailableSlotsBtn"
+			type="button"
+			class="btn btn-outline-primary w-100 mb-3"
+		  >
+			Buscar citas disponibles
+		  </button>
+
+		  <div id="availableSlotsContainer" class="d-none">
+
+			<label for="availableSlot" class="form-label fw-semibold">
+			  Próximas citas disponibles
+			</label>
+
+			<select id="availableSlot" class="form-select">
+			  <option value="">Selecciona una cita</option>
+			</select>
+
+
+			<small class="text-muted">
+			  Al seleccionar una cita se rellenarán la fecha y la hora automáticamente
+			</small>
+
+		  </div>
+
+		</div>
+
+            <div class="row">
+
+              <div class="col-md-6 mb-3">
+                <label for="date" class="form-label">
+                  Fecha <span style="color:red">*</span>
+                </label>
+
+                <input id="date" type="date" class="form-control" required>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="time" class="form-label">
+                  Hora <span style="color:red">*</span>
+                </label>
+
+                <input id="time" type="time" class="form-control" required>
+              </div>
+
+            </div>
+
+            <div class="mb-4">
+              <label for="reasonForAppointment" class="form-label">
+                Motivo de la consulta
+              </label>
+
+              <textarea
+                id="reasonForAppointment"
+                class="form-control"
+                rows="3"
+                placeholder="ejemplo: Síntomas empeoran"
+              ></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary main-btn w-100">
+              <i class="bi bi-save me-2"></i>
+              Guardar cita
+            </button>
+
+          </form>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- MODAL PARA ELIMINAR -->
+<div class="modal fade" id="deleteAppointmentModal" tabindex="-1">
+
+  <div class="modal-dialog modal-dialog-centered">
+
+    <div class="modal-content rounded-4">
+
+      <div class="modal-header">
+
+        <h5 class="bi bi-trash3 modal-title text-danger">
+          Eliminar cita
+        </h5>
+
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+
+      </div>
+
+      <div class="modal-body">
+
+        <p class="mb-0">
+          ¿Estás seguro de que quieres eliminar esta cita?
+        </p>
+
+      </div>
+
+      <div class="modal-footer">
+
+		<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+		  Cancelar
+		</button>
+
+        <button id="confirmDeleteAppointmentBtn" type="button" class="btn btn-danger">
+          Eliminar
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Comprobar si el usuario ha iniciado sesión para que este .html esté disponible -->
+  <script src="../js/authentication.js"></script>
+
+  <!-- Appointments.js -->
+  <script src="../js/appointments.js"></script>
+
+
+
+
+
+  <!-- FOOTER -->
+  <footer class="text-white py-4 mt-5">
+
+    <div class="container d-flex flex-column flex-md-row
+      justify-content-between align-items-center gap-3">
+
+      <div class="fw-bold d-flex align-items-center gap-2">
+
+        <img src="../assets/images/hygeia_logo.png"
+          alt="Logo"
+          width="40">
+
+        HYGEIA
+
+      </div>
+
+      <small>
+        © 2026 Hygeia | Portal del Paciente
+      </small>
+
+    </div>
+
+  </footer>
+
+</body>
+
+
+</html>
