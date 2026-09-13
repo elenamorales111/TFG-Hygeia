@@ -146,7 +146,7 @@ async function seedMedications(patientId) {
     time: "17:00",
     frequency: "FRECUENCIA_BAJA",
     weekDays: null,
-    specificDate: "2026-07-20",
+    specificDate: "2026-09-28",
     patient_id: patientId,
   });
 
@@ -370,13 +370,14 @@ const doctor4 = await Doctor.create({
 	};
 }
 
-/*Función para generar las salas de las videollamadas (por si cambio
-la fecha de la cita en el seed.js y se me olvida cambiarlo aquí*/
-function generateVideoCallCode(doctorId, patientId, date, time) {
+//Función para generar las salas de las videollamadas
+function generateVideoCallCode(doctorId, patientId, date, time, code) {
+	
   const formattedDate = date.replaceAll("-", "");
   const formattedTime = time.replaceAll(":", "");
 
-  return `doctor${doctorId}patient${patientId}date${formattedDate}time${formattedTime}`;
+  return `doctor${doctorId}patient${patientId}date${formattedDate}time${formattedTime}code${code}`;
+
 }
 
 //Crear citas médicas
@@ -384,7 +385,7 @@ async function seedAppointments(patients, doctors) {
 
 	await MedicalAppointment.bulkCreate([
 	  {
-		date: "2026-07-11",
+		date: "2026-09-25",
 		time: "10:00",
 		medicalCenter: "Hospital Universitario La Paz",
 		doctor: "Pablo Hierro",
@@ -393,7 +394,7 @@ async function seedAppointments(patients, doctors) {
 		doctor_id: doctors.doctor1Id
 	  },
 	  {
-		date: "2026-07-22",
+		date: "2026-09-25",
 		time: "14:00",
 		medicalCenter: "Hospital Gregorio Marañón",
 		doctor: "Patricia Salas",
@@ -402,7 +403,7 @@ async function seedAppointments(patients, doctors) {
 		doctor_id: doctors.doctor2Id
 	  },
 	  {
-		date: "2026-07-12",
+		date: "2026-09-30",
 		time: "10:00",
 		medicalCenter: "Hospital Puerta de Hierro",
 		doctor: "Naiara Pozo",
@@ -411,7 +412,7 @@ async function seedAppointments(patients, doctors) {
 		doctor_id: doctors.doctor4Id
 	  },
 	  {
-		date: "2026-07-26",
+		date: "2026-09-26",
 		time: "16:00",
 		medicalCenter: "Hospital Gregorio Marañón",
 		doctor: "Patricia Salas",
@@ -423,57 +424,62 @@ async function seedAppointments(patients, doctors) {
 
 	await RealDoctorAppointment.bulkCreate([
 	  {
-		date: "2026-07-24",
+		date: "2026-09-24",
 		time: "11:00",
 		reason: "Consulta por videollamada",
 		status: "CONFIRMADA",
 		videocall: generateVideoCallCode(
 		  doctors.doctor1Id,
 		  patients.patient1Id,
-		  "2026-07-24",
-		  "11:00"
+		  "2026-09-24",
+		  "11:00",
+		  //Código generado por mí. En la aplicación se generan con números aleatorios
+		  "1234"
 		),
 		patient_id: patients.patient1Id,
 		doctor_id: doctors.doctor1Id
 	  },
 	  {
-		date: "2026-07-15",
+		date: "2026-09-24",
 		time: "15:00",
 		reason: "Seguimiento de esguince",
 		status: "CONFIRMADA",
 		videocall: generateVideoCallCode(
 		  doctors.doctor2Id,
 		  patients.patient2Id,
-		  "2026-07-15",
-		  "15:00"
+		  "2026-09-24",
+		  "15:00",
+		  "1234"
 		),
 		patient_id: patients.patient2Id,
 		doctor_id: doctors.doctor2Id
 	  },
 	  {
-		date: "2026-07-14",
+		date: "2026-09-24",
 		time: "11:00",
 		reason: "Consulta para analizar dolor de garganta",
 		status: "CONFIRMADA",
 		videocall: generateVideoCallCode(
 		  doctors.doctor4Id,
 		  patients.patient3Id,
-		  "2026-07-14",
-		  "11:00"
+		  "2026-09-24",
+		  "11:00",
+		  "1234"
 		),
 		patient_id: patients.patient3Id,
 		doctor_id: doctors.doctor4Id
 	  },
 	  {
-		date: "2026-07-27",
+		date: "2026-09-27",
 		time: "17:00",
 		reason: "Revisión de moratón por caída",
 		status: "CONFIRMADA",
 		videocall: generateVideoCallCode(
 		  doctors.doctor2Id,
 		  patients.patient3Id,
-		  "2026-07-27",
-		  "17:00"
+		  "2026-09-27",
+		  "17:00",
+		  "1234"
 		),
 		patient_id: patients.patient3Id,
 		doctor_id: doctors.doctor2Id
