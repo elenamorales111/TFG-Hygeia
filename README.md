@@ -21,7 +21,7 @@ git clone https://github.com/elenamorales111/TFG-Hygeia.git
 3. Escribe en tu terminal:
 
 ```
-cd Hygeia
+cd TFG-Hygeia
 npm install
 cd backend
 npm install
