@@ -15,8 +15,8 @@ registerForm.addEventListener("submit", async (event) => {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
   const phoneNumber = document.getElementById("phoneNumber").value;
-  const address = document.getElementById("address").value;
-  const postalCode = document.getElementById("postalCode").value;
+  const address = document.getElementById("address").value || null;
+  const postalCode = document.getElementById("postalCode").value || null;
   const province = document.getElementById("province").value;
 
   try {
@@ -62,18 +62,12 @@ registerForm.addEventListener("submit", async (event) => {
 	localStorage.removeItem("doctor_email");
 	localStorage.removeItem("isLoggedIn");
 
-	//Guardar datos del nuevo usuario
-	localStorage.setItem("patient_id", data.patient_id);
-	localStorage.setItem("role", data.role);
-	localStorage.setItem("patient_name", data.name);
-	localStorage.setItem("patient_email", data.email);
-	localStorage.setItem("isLoggedIn", "true");
 
 	message.className = "alert alert-success mt-4";
-	message.textContent = "Registro correcto. Redirigiendo a la pantalla de inicio ...";
+	message.textContent = "Registro correcto. Redirigiendo al inicio de sesión ...";
 
 	setTimeout(() => {
-	  window.location.href = "/home.html";
+	  window.location.href = "/frontend/pages/login.html";
 	}, 1200);
 
 	  } catch (error) {
