@@ -77,23 +77,14 @@ doctorRegisterForm.addEventListener("submit", async (event) => {
 
     }
 
-    localStorage.clear();
+	localStorage.clear();
 
-    localStorage.setItem("doctor_id", data.doctor_id);
-    localStorage.setItem("humanDoctor_id", data.humanDoctor_id);
-    localStorage.setItem("doctor_name", data.name);
-    localStorage.setItem("doctor_email", data.email);
-    localStorage.setItem("role", data.role);
-    localStorage.setItem("isLoggedIn", "true");
+	message.className = "alert alert-success mt-4";
+	message.textContent = "Registro correcto. Redirigiendo al inicio de sesión...";
 
-    message.className = "alert alert-success mt-4";
-    message.textContent = "Registro correcto. Redirigiendo a la pantalla de inicio ...";
-
-    setTimeout(() => {
-
-      window.location.href = "/home.html";
-
-    }, 1200);
+	setTimeout(() => {
+	  window.location.href = "/frontend/pages/doctorLogin.html";
+	}, 1200);
 
   } catch (error) {
 
