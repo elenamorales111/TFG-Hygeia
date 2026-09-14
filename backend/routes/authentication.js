@@ -174,14 +174,15 @@ router.post("/register", async (req, res) => {
       province
     } = req.body;
 
-    if (!name || !surnames || !dni || !email || !password) {
+	if (!name || !surnames || !dateOfBirth || !dni || !email || !password || 
+	!phoneNumber ||!province) {
 
-      return res.status(400).json({
-        ok: false,
-        message: "Nombre, apellidos, DNI, email y contraseña son obligatorios"
-      });
+	  return res.status(400).json({
+		ok: false,
+		message: "Todos los campos obligatorios (*) deben rellenarse"
+	  });
 
-    }
+	}
 
     const patientExists = await Patient.findOne({
       where: {
